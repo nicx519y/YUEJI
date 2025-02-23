@@ -14,8 +14,30 @@
   }
 }
 
+@media (prefers-color-scheme: light) {
+  :root {
+    --background: #ffffff;
+    --foreground: #171717;
+  }
+}
+
 body {
   color: var(--foreground);
-  background: var(--background);
+  background: #ffffff;
+  background: linear-gradient( 180deg, #FC5A01 0%, #FC5A01 100%) opacity 0.05;
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.nav-link {
+  font-size: 18px;
+  font-weight: 600;
+  color: #471A00;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-link:hover {
+  color: #FC5A01;
+}
+
+
