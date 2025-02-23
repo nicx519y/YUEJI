@@ -57,16 +57,18 @@ server {
 
     # 静态文件缓存
     location /_next/static {
-        alias /var/www/yueji/.next/standalone/.next/static;
+        alias /var/www/yueji/.next/static;
         expires 365d;
         access_log off;
+        add_header Cache-Control "public, max-age=31536000, immutable";
     }
 
     # Next.js 静态资源
     location /_next {
-        alias /var/www/yueji/.next/standalone/.next;
+        alias /var/www/yueji/.next;
         expires 365d;
         access_log off;
+        add_header Cache-Control "public, max-age=31536000, immutable";
     }
 
     # Next.js Image Optimization API

@@ -1,13 +1,11 @@
 /** @type {import('next').NextConfig} */
 const config = {
-  output: 'standalone',
   experimental: {
     serverActions: {
       allowedOrigins: ['suixinyue.cn'],
       bodySizeLimit: '2mb'
     }
   },
-  assetPrefix: process.env.NODE_ENV === 'production' ? 'https://suixinyue.cn' : undefined,
   images: {
     domains: ['suixinyue.cn'],
     deviceSizes: [256, 384, 512, 640, 750, 828, 1080, 1200],

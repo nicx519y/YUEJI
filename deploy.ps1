@@ -52,12 +52,9 @@ try {
     # 从 app 目录复制 favicon.ico
     Copy-Item -Path "src/app/favicon.ico" -Destination "deploy/favicon.ico" -Force
     Copy-Item -Path "package.json", "next.config.ts" -Destination "deploy"
-    # 创建 .next 目录结构
-    New-Item -ItemType Directory -Path "deploy/.next/standalone/.next/static" -Force | Out-Null
+    # 复制构建文件
+    Copy-Item -Path ".next" -Destination "deploy/.next" -Recurse
 
-    # 按顺序复制文件
-    Copy-Item -Path ".next/standalone" -Destination "deploy/.next/standalone" -Recurse
-    Copy-Item -Path ".next/static" -Destination "deploy/.next/standalone/.next/static" -Recurse -Force
     # 压缩整个部署目录
     Compress-Archive -Path "deploy/*" -DestinationPath "deploy.zip" -Force
     # 清理临时目录
