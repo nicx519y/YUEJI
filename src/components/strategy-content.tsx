@@ -1,46 +1,34 @@
 import { HStack } from "@chakra-ui/react";
-import styled from "styled-components";
 
-const FirstStrategy = styled.div`
-    width: 500px;
-    height: 280px;
-    background-image: url("/yoga-pic1.png");
-`;
-
-const SecondStrategy = styled.div`
-    width: 155px;
-    height: 280px;
-`;
-
-const StrategyTitle = styled.div`
-    eight: 600;
-    font-size: 18px;
-    color: #FFFFFF;
-    line-height: 18px;
-    text-align: left;
-    font-style: normal;
-    padding: 0px 16px;
-`;
-
+function StrategyCard({ image, title, marginTop = "222px", textAlign = "left" }: { 
+  image: string; 
+  title: string;
+  marginTop?: string;
+  textAlign?: "left" | "center";
+}) {
+  return (
+    <div 
+      className={`${image === "/yoga-pic1.png" ? "w-[500px]" : "w-[155px]"} h-[280px] bg-cover`}
+      style={{ backgroundImage: `url(${image})` }}
+    >
+      <div 
+        className={`text-white text-lg leading-[18px] font-semibold px-4`}
+        style={{ marginTop, textAlign }}
+      >
+        {title}
+      </div>
+    </div>
+  );
+}
 
 export default function StrategyContent() {
-    return (
-        <HStack gap="20px">
-            <FirstStrategy>
-                <StrategyTitle style={{ marginTop: "222px" }} >主心脏</StrategyTitle>
-            </FirstStrategy>
-            <SecondStrategy style={{ backgroundImage: "url('/yoga-pic2.png')" }} >
-                <StrategyTitle style={{ marginTop: "246px", textAlign: "center" }} >主气脉</StrategyTitle>
-            </SecondStrategy>
-            <SecondStrategy style={{ backgroundImage: "url('/yoga-pic3.png')" }} >
-                <StrategyTitle style={{ marginTop: "246px", textAlign: "center" }} >主运化</StrategyTitle>
-            </SecondStrategy>
-            <SecondStrategy style={{ backgroundImage: "url('/yoga-pic4.png')" }} >
-                <StrategyTitle style={{ marginTop: "246px", textAlign: "center" }} >主疏通</StrategyTitle>
-            </SecondStrategy>
-            <SecondStrategy style={{ backgroundImage: "url('/yoga-pic5.png')" }} >
-                <StrategyTitle style={{ marginTop: "246px", textAlign: "center" }} >主身心</StrategyTitle>
-            </SecondStrategy>
-        </HStack>
-    )
+  return (
+    <HStack gap="20px">
+      <StrategyCard image="/yoga-pic1.png" title="主心脏" />
+      <StrategyCard image="/yoga-pic2.png" title="主气脉" marginTop="246px" textAlign="center" />
+      <StrategyCard image="/yoga-pic3.png" title="主运化" marginTop="246px" textAlign="center" />
+      <StrategyCard image="/yoga-pic4.png" title="主疏通" marginTop="246px" textAlign="center" />
+      <StrategyCard image="/yoga-pic5.png" title="主身心" marginTop="246px" textAlign="center" />
+    </HStack>
+  )
 }

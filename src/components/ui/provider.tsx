@@ -1,11 +1,7 @@
 "use client"
 
 import { ChakraProvider, defaultSystem } from "@chakra-ui/react"
-
-import {
-  ColorModeProviderProps,
-  ColorModeProvider,
-} from "@/components/ui/color-mode"
+import { ColorMode, ColorModeProvider } from "./color-mode"
 
 // 定义主题配置
 const theme = {
@@ -25,12 +21,18 @@ const theme = {
   }
 };
 
-export function Provider(props: ColorModeProviderProps) {
+interface ProviderProps {
+  attribute?: string
+  defaultTheme?: ColorMode  // 使用 ColorMode 类型
+  children: React.ReactNode
+}
 
-
+export function Provider({ children, defaultTheme = "light", attribute = "class" }: ProviderProps) {
   return (
     <ChakraProvider value={theme}>
-      <ColorModeProvider {...props} />
+      <ColorModeProvider defaultTheme={defaultTheme} attribute={attribute}>
+        {children}
+      </ColorModeProvider>
     </ChakraProvider>
   )
 }

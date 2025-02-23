@@ -17,16 +17,16 @@ export default function Header() {
                 </Link>
 
                 <Box className="flex items-center space-x-6" flex={1} justifyContent="flex-end" >
-                    <div className="hidden md:flex items-center space-x-[56px] size-18">
+                    <div className="hidden md:flex items-center space-x-[56px]">
                         <Link
                             href="#"
-                            className="text-[#471A00] text-[18px] font-weight-[400] hover:text-[#FC5A01] transition-colors"
+                            className="text-[#471A00] text-[18px] font-normal hover:text-[#FC5A01] transition-colors"
                         >
                             首页
                         </Link>
                         <Link
                             href="#footer"
-                            className="text-[#471A00] text-[18px] font-weight-[400] hover:text-[#FC5A01] transition-colors"
+                            className="text-[#471A00] text-[18px] font-normal hover:text-[#FC5A01] transition-colors"
                         >
                             联系我们
                         </Link>
