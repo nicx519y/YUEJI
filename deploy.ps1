@@ -88,19 +88,7 @@ try {
 
     # 8. 检查部署状态
     Write-ColorOutput Green "Checking deployment status..."
-    ssh "${remoteUser}@${remoteHost}" @"
-        echo '检查 PM2 状态：'
-        pm2 list
-        
-        echo '检查端口监听情况：'
-        netstat -tlnp | grep 3000
-        
-        echo '检查防火墙状态：'
-        ufw status
-        
-        echo '检查应用日志：'
-        pm2 logs yueji --lines 10
-"@
+    ssh "${remoteUser}@${remoteHost}" "pm2 list && netstat -tlnp | grep 3000"
     Check-LastExitCode
 
     # 9. 清理本地临时文件
@@ -108,6 +96,7 @@ try {
     Remove-Item "deploy.zip" -Force
 
     Write-ColorOutput Green "Deployment completed successfully!"
+    Write-ColorOutput Green "应用已启动，请访问: http://${remoteHost}:3000"
 }
 catch {
     Write-ColorOutput Red "Error: $($_.Exception.Message)"
