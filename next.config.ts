@@ -8,6 +8,11 @@ const config = {
     }
   },
   assetPrefix: process.env.NODE_ENV === 'production' ? 'https://suixinyue.cn' : undefined,
+  images: {
+    domains: ['suixinyue.cn'],
+    deviceSizes: [256, 384, 512, 640, 750, 828, 1080, 1200],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+  },
   async headers() {
     return [
       {

@@ -39,13 +39,24 @@ try {
     Push-Location $PSScriptRoot
     # 创建临时部署目录
     New-Item -ItemType Directory -Path "deploy" -Force | Out-Null
+    # 先清理所有目标目录
+    if (Test-Path "deploy/.next") {
+        Remove-Item "deploy/.next" -Recurse -Force
+    }
+    if (Test-Path "deploy/public") {
+        Remove-Item "deploy/public" -Recurse -Force
+    }
+
     # 复制需要的文件到部署目录
-    Copy-Item -Path ".next" -Destination "deploy/.next" -Recurse
     Copy-Item -Path "public" -Destination "deploy/public" -Recurse
+    # 从 app 目录复制 favicon.ico
+    Copy-Item -Path "src/app/favicon.ico" -Destination "deploy/favicon.ico" -Force
     Copy-Item -Path "package.json", "next.config.ts" -Destination "deploy"
-    # 如果使用 standalone 模式，确保复制 standalone 目录
+    # 创建 .next 目录结构
+    New-Item -ItemType Directory -Path "deploy/.next/standalone/.next/static" -Force | Out-Null
+
+    # 按顺序复制文件
     Copy-Item -Path ".next/standalone" -Destination "deploy/.next/standalone" -Recurse
-    # 确保复制静态资源
     Copy-Item -Path ".next/static" -Destination "deploy/.next/standalone/.next/static" -Recurse -Force
     # 压缩整个部署目录
     Compress-Archive -Path "deploy/*" -DestinationPath "deploy.zip" -Force

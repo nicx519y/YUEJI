@@ -69,6 +69,15 @@ server {
         access_log off;
     }
 
+    # Next.js Image Optimization API
+    location /_next/image {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+
     # 公共静态文件
     location /static {
         alias /var/www/yueji/public/static;
@@ -78,10 +87,10 @@ server {
 
     # 图片文件
     location ~ \.(jpg|jpeg|png|gif|ico|svg)$ {
-        root /var/www/yueji/public;
+        root /var/www/yueji;
         expires 365d;
         access_log off;
-        try_files $uri $uri/ =404;
+        try_files $uri /favicon.ico /public/$uri /public/static/$uri =404;
     }
 
     # 反向代理到 Next.js 应用
