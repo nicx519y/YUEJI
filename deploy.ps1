@@ -2,6 +2,7 @@
 $remoteHost = "47.113.146.209"  # 服务器 IP
 $remoteUser = "root"   # 服务器用户名
 $remotePath = "/var/www/yueji"  # 网站部署路径
+$sshOptions = "-i ~/.ssh/id_rsa -o StrictHostKeyChecking=no"
 
 # 颜色输出函数
 function Write-ColorOutput($ForegroundColor) {
@@ -51,7 +52,7 @@ try {
 
     # 4. 创建远程目录（如果不存在）
     Write-ColorOutput Green "Creating remote directory..."
-    ssh "${remoteUser}@${remoteHost}" @"
+    ssh $sshOptions "${remoteUser}@${remoteHost}" @"
         mkdir -p ${remotePath}
         cd ${remotePath}
         rm -rf .next public package.json package-lock.json next.config.ts node_modules
@@ -60,7 +61,7 @@ try {
 
     # 5. 上传文件到服务器
     Write-ColorOutput Green "Uploading files to server..."
-    scp "deploy.zip" "${remoteUser}@${remoteHost}:${remotePath}/deploy.zip"
+    scp $sshOptions "deploy.zip" "${remoteUser}@${remoteHost}:${remotePath}/deploy.zip"
     Check-LastExitCode
 
     # 6. 在服务器上解压文件并重启服务
@@ -80,7 +81,7 @@ try {
         "pm2 start npm --name 'yueji' --instances 1 -e .env -- start && " +
         "pm2 save"
 
-    ssh "${remoteUser}@${remoteHost}" $deployCommand
+    ssh $sshOptions "${remoteUser}@${remoteHost}" $deployCommand
     Check-LastExitCode
 
     # 7. 等待几秒确保进程稳定
@@ -88,7 +89,7 @@ try {
 
     # 8. 检查部署状态
     Write-ColorOutput Green "Checking deployment status..."
-    ssh "${remoteUser}@${remoteHost}" "pm2 list && netstat -tlnp | grep 3000"
+    ssh $sshOptions "${remoteUser}@${remoteHost}" "pm2 list && netstat -tlnp | grep 3000"
     Check-LastExitCode
 
     # 9. 清理本地临时文件
