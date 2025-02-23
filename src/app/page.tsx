@@ -1,21 +1,21 @@
-'use client'
 
 import { Box, Image } from "@chakra-ui/react";
 import Hero from "@/components/hero";
 import Course from "@/components/Course";
-import styled from "styled-components";
 import TeacherContent from "@/components/teacher-content";
 import StrategyContent from "@/components/strategy-content";
 import SixDayContent from "@/components/sixday-content";
 
 
-const PageContainer = styled.div`
-  width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-`;
+
+
+function PageContainer({ children }: { children: React.ReactNode }) {
+  return (
+    <Box width="1200px" alignItems="center" margin="0 auto" display="flex" flexDirection="column" gap="32px" >
+      {children}
+    </Box>
+  )
+}
 
 export default function Home() {
   return (
