@@ -42,7 +42,11 @@ try {
     # 复制需要的文件到部署目录
     Copy-Item -Path ".next" -Destination "deploy/.next" -Recurse
     Copy-Item -Path "public" -Destination "deploy/public" -Recurse
-    Copy-Item -Path "package.json", "package-lock.json", "next.config.ts" -Destination "deploy"
+    Copy-Item -Path "package.json", "next.config.ts" -Destination "deploy"
+    # 如果使用 standalone 模式，确保复制 standalone 目录
+    Copy-Item -Path ".next/standalone" -Destination "deploy/.next/standalone" -Recurse
+    # 确保复制静态资源
+    Copy-Item -Path ".next/static" -Destination "deploy/.next/standalone/.next/static" -Recurse -Force
     # 压缩整个部署目录
     Compress-Archive -Path "deploy/*" -DestinationPath "deploy.zip" -Force
     # 清理临时目录
@@ -104,7 +108,15 @@ echo "PORT=3000" >> .env
 echo "HOSTNAME=0.0.0.0" >> .env
 
 # 启动应用
-pm2 start npm --name 'yueji' -- start
+pm2 start .next/standalone/server.js --name 'yueji' --time -- -p 3000 --hostname 0.0.0.0
+# 等待应用启动
+sleep 5
+# 检查应用是否正常运行
+curl -s http://localhost:3000 || {
+    echo "应用启动失败，查看日志："
+    pm2 logs yueji --lines 50
+    exit 1
+}
 pm2 save
 '@ -replace "`r`n", "`n"
 

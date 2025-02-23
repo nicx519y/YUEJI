@@ -57,32 +57,60 @@ server {
 
     # 静态文件缓存
     location /_next/static {
-        alias /var/www/yueji/.next/static;
+        alias /var/www/yueji/.next/standalone/.next/static;
         expires 365d;
         access_log off;
     }
 
-    location /static {
+    # Next.js 静态资源
+    location /_next {
+        alias /var/www/yueji/.next/standalone/.next;
         expires 365d;
         access_log off;
+    }
+
+    # 公共静态文件
+    location /static {
+        alias /var/www/yueji/public/static;
+        expires 365d;
+        access_log off;
+    }
+
+    # 图片文件
+    location ~ \.(jpg|jpeg|png|gif|ico|svg)$ {
+        root /var/www/yueji/public;
+        expires 365d;
+        access_log off;
+        try_files $uri $uri/ =404;
     }
 
     # 反向代理到 Next.js 应用
     location / {
-        proxy_pass http://localhost:3000;
+        proxy_pass http://127.0.0.1:3000;
         proxy_http_version 1.1;
-        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
-        proxy_set_header Host \$host;
-        proxy_cache_bypass \$http_upgrade;
-        proxy_set_header X-Real-IP \$remote_addr;
-        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto \$scheme;
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # 修改错误处理
+        proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+        proxy_next_upstream_tries 1;
+        proxy_next_upstream_timeout 10s;
 
         # 超时设置
         proxy_connect_timeout 60s;
         proxy_send_timeout 60s;
         proxy_read_timeout 60s;
+
+        # 添加缓冲设置
+        proxy_buffering on;
+        proxy_buffer_size 128k;
+        proxy_buffers 4 256k;
+        proxy_busy_buffers_size 256k;
     }
 
     # 禁止访问 . 文件
