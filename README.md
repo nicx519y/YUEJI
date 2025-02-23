@@ -34,3 +34,60 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+# 悦己经络瑜伽
+
+## 部署说明
+
+### 环境要求
+
+- Node.js 18+
+- PowerShell
+- SSH 客户端
+- 已配置的域名（指向服务器IP）
+
+### 首次部署
+
+1. 设置 SSH 密钥：
+```powershell
+.\setup-ssh.ps1
+```
+
+2. 配置服务器环境（包含 Nginx 和 SSL）：
+```powershell
+.\setup-server.ps1
+```
+
+3. 部署应用：
+```powershell
+.\deploy.ps1
+```
+
+### 后续更新
+
+只需要运行：
+```powershell
+.\deploy.ps1
+```
+
+### 部署验证
+
+- 访问 https://suixinyue.cn/ 确认网站是否正常运行
+- 检查 HTTPS 证书是否正确配置
+- 验证静态资源是否正确加载
+
+### 技术栈
+
+- Next.js
+- Tailwind CSS
+- Chakra UI
+- PM2 (进程管理)
+- Nginx (反向代理)
+- Let's Encrypt SSL
+
+### 目录结构
+
+- `/src` - 源代码
+- `/public` - 静态资源
+- `/scripts` - 部署脚本
+- `/.next` - 构建输出
