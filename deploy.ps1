@@ -116,7 +116,7 @@ echo "PORT=3000" >> .env
 echo "HOSTNAME=0.0.0.0" >> .env
 
 # 启动应用
-pm2 start .next/standalone/server.js --name 'yueji' --time -- -p 3000 --hostname 0.0.0.0
+pm2 start "npm" --name "yueji" -- start
 # 等待应用启动
 sleep 5
 # 检查应用是否正常运行
