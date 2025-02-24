@@ -10,8 +10,8 @@ export default function Header() {
                     <Image
                         src="/logo.png"
                         alt="悦己"
-                        width={93}
-                        height={36}
+                        width={110}
+                        height={43}
                         priority
                     />
                 </Link>
@@ -20,13 +20,13 @@ export default function Header() {
                     <div className="hidden md:flex items-center space-x-[56px]">
                         <Link
                             href="#"
-                            className="text-[#471A00] text-[18px] font-normal hover:text-[#FC5A01] transition-colors"
+                            className="text-[#471A00] text-[18px] font-normal hover:text-[#FC5A01] transition-colors border-b-2 border-[#FC5A01] pb-[5px] pt-[5px]"
                         >
                             首页
                         </Link>
                         <Link
                             href="#footer"
-                            className="text-[#471A00] text-[18px] font-normal hover:text-[#FC5A01] transition-colors"
+                            className="text-[#471A00] text-[18px] font-normal hover:text-[#FC5A01] transition-colors border-b-2 border-[#ffffff] pb-[5px] pt-[5px]"
                         >
                             联系我们
                         </Link>

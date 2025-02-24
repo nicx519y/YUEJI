@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "悦己",
-  description: "悦己",
+  title: "悦己—悦健康，悦自在",
+  description: "悦己—悦健康，悦自在",
 };
 
 export default function RootLayout({
