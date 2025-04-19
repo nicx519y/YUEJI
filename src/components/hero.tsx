@@ -2,7 +2,7 @@ import { Center, HStack, Image, Text, VStack } from "@chakra-ui/react";
 
 export default function Hero() {
   return (
-    <Center height="550px" className="bg-[url('/hero.png')] bg-cover bg-center max-w-[1920px] min-w-[1200px] mx-auto" >
+    <Center height="550px" className="bg-[url('/hero.jpg')] bg-cover bg-center max-w-[1920px] min-w-[1200px] mx-auto" >
       <div className="min-w-[1200px] w-[1200px] h-[550px] flex justify-center items-center relative">
         <Image 
           src="/slogen.png" 
