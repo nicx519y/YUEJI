@@ -126,7 +126,7 @@ pm2 save
     Check-LastExitCode
 
     Write-ColorOutput Green "Deployment completed successfully!"
-    Write-ColorOutput Green "应用已启动，请访问: https://suixinyue.cn/"
+    Write-ColorOutput Green "Application is running at: https://suixinyue.cn/"
 }
 catch {
     Write-ColorOutput Red "Error: $($_.Exception.Message)"
